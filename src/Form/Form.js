@@ -1,16 +1,22 @@
 import React, {useState} from 'react'
 import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import FileBase from 'react-file-base64'
+import {useDispatch} from 'react-redux'
+import {createPost} from '../actions/posts'
+
 import useStyles from './styles'
+
 
 const Form = () => {
     const [postData, setPostData] = useState({
         creator: '', title: '', message: '', tags: '', selectedFile: ''
     })
     const classes = useStyles()
+    const dispatch = useDispatch()
 
-    const handleSubmit = () => {
-        console.log("This is form handleSubmit")
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(createPost(postData))
     }
     const clear = () => {
         console.log("This is the CLEAR function")
@@ -18,6 +24,7 @@ const Form = () => {
     return (
         <Paper className={classes.paper}>
             <form autoComplete="off" 
+                  className={`${classes.root} ${classes.form}`}
                   noValidate className={classes.form} 
                   onSubmit={handleSubmit}
             >
